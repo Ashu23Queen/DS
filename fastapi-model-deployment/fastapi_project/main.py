@@ -19,5 +19,5 @@ def read_item(item_id: int, q: str | None = None) -> dict[str, str | int | None]
 
 @app.post("/items")
 def creat_item(item: Item):
-    return {"item": item}     
+    return {"item": item}      
 
