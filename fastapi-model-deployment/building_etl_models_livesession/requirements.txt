@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+httpx
+python-multipart
+python-jose
+passlib
+sqlalchemy
+aiosqlite
+databases
+
+# Jupyter support
+jupyter
+notebook
+ipykernel
