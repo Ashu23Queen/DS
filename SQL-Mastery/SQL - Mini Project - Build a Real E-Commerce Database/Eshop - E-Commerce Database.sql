@@ -90,6 +90,17 @@ INSERT INTO Payments (OrderID, PaymentDate, PaymentMethod, Amount) VALUES
 (2, '2025-11-10 18:25', 'UPI', 2598.00);
 
 
+----------------------- quering ---------------------------------
+ 
+SELECT COUNT(*) AS CustomersCount FROM Customers;
+SELECT COUNT(*) AS OrdersCount FROM Orders;
+
+
+SELECT o.OrderID, c.Email, o.TotalAmount
+FROM Orders o 
+JOIN Customers c ON o.CustomerID = c.CustomerID
+ORDER BY o.OrderDate DESC
+LIMIT 10;
 
 
 
