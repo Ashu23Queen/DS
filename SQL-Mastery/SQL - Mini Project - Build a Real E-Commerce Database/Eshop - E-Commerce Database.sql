@@ -109,6 +109,15 @@ select count(*) As CustomersCount FROM Customers;
 SELECT COUNT(*) AS OrdersCount FROM Orders;
 
 
+################### Revenue by month ###############################3
+SELECT 
+    DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth,
+    SUM(TotalAmount) AS Revenue
+FROM Orders
+WHERE OrderStatus = 'Completed'
+GROUP BY DATE_FORMAT(OrderDate, '%Y-%m')
+ORDER BY YearMonth;
 
 
+################### Top 5 products by quantity sold  ##############################3
 
