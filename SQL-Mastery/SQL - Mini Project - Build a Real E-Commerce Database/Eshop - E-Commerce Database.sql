@@ -102,5 +102,13 @@ JOIN Customers c ON o.CustomerID = c.CustomerID
 ORDER BY o.OrderDate DESC
 LIMIT 10;
 
+########################### quering ##############################################3
+
+# How many customers and orders exist?
+select count(*) As CustomersCount FROM Customers;
+SELECT COUNT(*) AS OrdersCount FROM Orders;
+
+
+
 
 
