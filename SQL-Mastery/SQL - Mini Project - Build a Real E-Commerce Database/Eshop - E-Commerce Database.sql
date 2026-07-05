@@ -51,3 +51,45 @@ CREATE TABLE Payments (
     Amount DECIMAL(12,2),
     FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
 );
+
+
+
+
+
+
+----------------------- inserting data ---------------------------------
+
+-- Categories
+INSERT INTO Categories (CategoryName) VALUES ('Beverages'),('Snacks'),('Supplements'),('Accessories');
+
+-- Products
+INSERT INTO Products (ProductName, CategoryID, Price) VALUES
+('Green Tea', 1, 199.00), ('Protein Bar', 2, 99.00), ('Whey Protein 1kg', 3, 2499.00),
+('Shaker Bottle', 4, 299.00);
+
+-- Customers
+INSERT INTO Customers (Email, FirstName, LastName, SignupDate, City) VALUES
+('alice@example.com','Alice','Roy','2024-10-05','Bengaluru'),
+('bob@example.com','Bob','Kumar','2025-01-12','Chennai'),
+('cara@example.com','Cara','Das','2024-11-20','Hyderabad');
+
+-- Orders + OrderItems + Payments
+INSERT INTO Orders (CustomerID, OrderDate, OrderStatus, TotalAmount)
+VALUES (1, '2025-11-01 10:15', 'Completed', 298.00),
+       (2, '2025-11-10 18:20', 'Completed', 2598.00),
+       (1, '2025-11-15 09:00', 'Cancelled', 99.00);
+
+-- OrderItems (info:- UnitPrice replicates Products.Price at time of sale)
+INSERT INTO OrderItems (OrderID, ProductID, Quantity, UnitPrice) VALUES
+(1, 1, 1, 199.00), (1, 4, 1, 99.00),
+(2, 3, 1, 2499.00), (2, 4, 1, 99.00),
+(3, 2, 1, 99.00);
+
+INSERT INTO Payments (OrderID, PaymentDate, PaymentMethod, Amount) VALUES
+(1, '2025-11-01 10:20', 'Card', 298.00),
+(2, '2025-11-10 18:25', 'UPI', 2598.00);
+
+
+
+
+
