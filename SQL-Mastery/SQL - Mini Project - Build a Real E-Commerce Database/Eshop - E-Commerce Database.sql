@@ -120,4 +120,18 @@ ORDER BY YearMonth;
 
 
 ################### Top 5 products by quantity sold  ##############################3
+SELECT 
+    p.ProductName, 
+    SUM(oi.Quantity) AS TotalQuantitySold
+FROM orderitems oi
+JOIN Products p ON oi.ProductID = p.ProductID
+GROUP BY p.ProductID, p.ProductName
+ORDER BY TotalQuantitySold DESC
+LIMIT 5;
+
+###############   How to check your exact table names     #################
+SHOW TABLES FROM eshopdatabase;
+
+
+
 
