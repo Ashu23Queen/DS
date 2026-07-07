@@ -228,3 +228,24 @@ ORDER BY CompletedOrderCount DESC;
 
 
 
+
+
+# Grouping by Date Functions
+# Find out how many total orders were placed in each month, along with the total revenue generated.
+select month(OrderDate) As OrderMonth,
+	   count(OrderId) As TotalOrders,
+       Sum(TotalAmount) As MonthlyRevenue
+from orders
+where OrderStatus != 'Cancelled'
+group by month(OrderDate)
+Order by OrderMonth ASC;
+
+
+
+
+
+
+
+
+
+
