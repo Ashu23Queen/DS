@@ -277,5 +277,16 @@ having avg(TotalAmount) > 100.00
 ORDER BY LifetimeValue DESC;
 
 
+# INNER JOIN
+# Find which customer placed which completed order.
+
+SELECT c.FirstName, o.OrderID, o.TotalAmount
+FROM Customers c
+INNER JOIN Orders o ON c.CustomerID = o.CustomerID
+WHERE o.OrderStatus = 'Completed';
+
+
+
+
 
 
