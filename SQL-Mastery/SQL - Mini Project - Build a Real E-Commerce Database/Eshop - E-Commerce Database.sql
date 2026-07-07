@@ -133,5 +133,33 @@ LIMIT 5;
 SHOW TABLES FROM eshopdatabase;
 
 
+#####################   Customer lifetime value ##########################
+SELECT 
+    c.CustomerID, 
+    c.Email, 
+    COALESCE(o_stats.OrdersCount, 0) AS OrdersCount,    # COALESCE evaluates arguments from left to right and returns the first non-null value it encounters.
+    COALESCE(o_stats.TotalSpent, 0) AS TotalSpent       # If o_stats.TotalSpent is NULL (because the customer has no orders), COALESCE replaces it with 0.
+FROM Customers c
+LEFT JOIN (
+    SELECT 
+        CustomerID,
+        COUNT(OrderID) AS OrdersCount,
+        SUM(CASE WHEN OrderStatus = 'Completed' THEN TotalAmount ELSE 0 END) AS TotalSpent
+    FROM Orders
+    GROUP BY CustomerID
+) o_stats ON c.CustomerID = o_stats.CustomerID
+ORDER BY TotalSpent DESC;
+
+
+
+
+
+
+
+
+ 
+
+
+
 
 
