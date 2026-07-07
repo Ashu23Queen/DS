@@ -211,6 +211,14 @@ WHERE Orders.OrderStatus = 'Completed'
 GROUP BY ProductID
 ORDER BY TotalQtySold DESC;
 
+# Lifecycle (WHERE vs HAVING)
+/* 
+Identify "high-value cities" where customers have placed more than 1 completed order.
+This query uses all five clauses so you can see the complete execution pipeline in action.
+*/
+
+
+
  
 
 
