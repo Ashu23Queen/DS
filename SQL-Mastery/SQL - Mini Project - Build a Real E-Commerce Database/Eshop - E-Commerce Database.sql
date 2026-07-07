@@ -241,9 +241,22 @@ group by month(OrderDate)
 Order by OrderMonth ASC;
 
 
+# Filtering with Multi-Table Joins and Aggregates
+/*
+Identify products that have generated more than ₹200 in gross revenue from completed sales, 
+ordered by their popularity.  
+*/
 
-
-
+SELECT p.ProductName, 
+       SUM(oi.Quantity) AS TotalUnitsSold,
+       SUM(oi.Quantity * oi.UnitPrice) AS GrossRevenue
+FROM OrderItems oi
+JOIN Products p ON oi.ProductID = p.ProductID
+JOIN Orders o ON oi.OrderID = o.OrderID
+WHERE o.OrderStatus = 'Completed'
+GROUP BY p.ProductID, p.ProductName
+HAVING GrossRevenue > 200.00
+ORDER BY TotalUnitsSold DESC;
 
 
 
