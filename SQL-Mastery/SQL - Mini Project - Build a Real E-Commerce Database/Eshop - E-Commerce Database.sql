@@ -217,11 +217,14 @@ Identify "high-value cities" where customers have placed more than 1 completed o
 This query uses all five clauses so you can see the complete execution pipeline in action.
 */
 
-
-
  
-
-
+SELECT City, COUNT(Orders.OrderID) AS CompletedOrderCount
+FROM Customers
+JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+WHERE Orders.OrderStatus = 'Completed'
+GROUP BY City
+HAVING COUNT(Orders.OrderID) > 1
+ORDER BY CompletedOrderCount DESC;
 
 
 
