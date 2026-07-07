@@ -164,6 +164,22 @@ GROUP BY cat.CategoryName
 ORDER BY TotalRevenue DESC;
 
 
+###########################   The True Order of Execution #######################3
+/*
+
+FROM / JOIN: The database gets the raw data from the tables.
+
+WHERE: Filters out individual rows before any grouping happens.
+
+GROUP BY: Collapses the remaining rows into summary groups.
+
+HAVING: Filters the grouped summaries (works like a WHERE clause, but for aggregates).
+
+SELECT: Extracts the specific columns/computations you requested.
+
+ORDER BY: Sorts the final output.
+
+*/
 
 
 
