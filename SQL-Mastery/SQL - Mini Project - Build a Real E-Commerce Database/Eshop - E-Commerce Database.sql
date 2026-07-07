@@ -261,4 +261,21 @@ ORDER BY TotalUnitsSold DESC;
 
 
 
+# Identifying Customer Habits (Multiple Aggregates)
+/* 
+Find customers who have made a purchase, showing their total spend and their single largest
+transaction—but only include customers whose average transaction size is greater than ₹100.
+*/
+
+select customerId,
+	   COUNT(OrderID) AS NumberOfOrders,
+       MAX(TotalAmount) AS HighestSingleSpend,
+       SUM(TotalAmount) AS LifetimeValue
+from orders
+group by CustomerId
+having avg(TotalAmount) > 100.00
+ORDER BY LifetimeValue DESC;
+
+
+
 
