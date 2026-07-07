@@ -199,8 +199,17 @@ FRom Payments
 GROUP BY PaymentMethod;
 
 
-
-
+# Combining Filtering, Grouping, and Sorting
+/* Find out how many items were sold for each product, 
+but only count items from orders that were successfully 'Completed'. 
+Sort by the highest quantity sold
+*/
+SELECT ProductID, SUM(Quantity) AS TotalQtySold
+FROM OrderItems
+JOIN Orders ON OrderItems.OrderID = Orders.OrderID
+WHERE Orders.OrderStatus = 'Completed'
+GROUP BY ProductID
+ORDER BY TotalQtySold DESC;
 
  
 
