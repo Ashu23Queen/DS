@@ -150,7 +150,18 @@ LEFT JOIN (
 ) o_stats ON c.CustomerID = o_stats.CustomerID
 ORDER BY TotalSpent DESC;
 
-
+###############################    Sales Revenue by Product Category   ###########################
+SELECT 
+    cat.CategoryName,
+    SUM(oi.Quantity) AS TotalUnitsSold,
+    SUM(oi.Quantity * oi.UnitPrice) AS TotalRevenue
+FROM OrderItems oi
+JOIN Orders o ON oi.OrderID = o.OrderID
+JOIN Products p ON oi.ProductID = p.ProductID
+JOIN Categories cat ON p.CategoryID = cat.CategoryID
+WHERE o.OrderStatus = 'Completed'
+GROUP BY cat.CategoryName
+ORDER BY TotalRevenue DESC;
 
 
 
