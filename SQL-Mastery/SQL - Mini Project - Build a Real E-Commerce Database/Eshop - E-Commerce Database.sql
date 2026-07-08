@@ -286,6 +286,21 @@ INNER JOIN Orders o ON c.CustomerID = o.CustomerID
 WHERE o.OrderStatus = 'Completed';
 
 
+# LEFT JOIN (The Left-Table Priority)
+/* A LEFT JOIN (or LEFT OUTER JOIN) returns all rows from the left table, 
+and the matched rows from the right table. 
+If there is no match, the database fills the columns from the right table with NULL.
+*/
+
+# List all customers and their order amounts, including customers who have never ordered anything.
+select c.firstname, o.orderId, o.TotalAmount
+from customers c
+LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
+
+
+
+
+
 
 
 
