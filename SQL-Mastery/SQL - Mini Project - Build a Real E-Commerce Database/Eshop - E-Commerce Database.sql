@@ -297,8 +297,19 @@ select c.firstname, o.orderId, o.TotalAmount
 from customers c
 LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
 
-
-
+# SELF-JOIN (The Table Mirror)
+/*
+A SELF-JOIN is a regular join, but the table is joined with itself. 
+This is incredibly useful for hierarchical data 
+(like a table of Employees where a column points to their Manager's EmployeeID)
+ or finding patterns within the same dataset.
+*/
+SELECT A.FirstName AS Customer1, 
+       B.FirstName AS Customer2, 
+       A.City
+FROM Customers A
+INNER JOIN Customers B ON A.City = B.City
+WHERE A.CustomerID < B.CustomerID;
 
 
 
