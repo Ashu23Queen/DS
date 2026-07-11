@@ -297,6 +297,8 @@ select c.firstname, o.orderId, o.TotalAmount
 from customers c
 LEFT JOIN Orders o ON c.CustomerID = o.CustomerID;
 
+
+
 # SELF-JOIN (The Table Mirror)
 /*
 A SELF-JOIN is a regular join, but the table is joined with itself. 
