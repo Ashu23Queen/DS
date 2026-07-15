@@ -226,10 +226,7 @@ GROUP BY City
 HAVING COUNT(Orders.OrderID) > 1
 ORDER BY CompletedOrderCount DESC;
 
-
-
-
-
+ 
 # Grouping by Date Functions
 # Find out how many total orders were placed in each month, along with the total revenue generated.
 select month(OrderDate) As OrderMonth,
@@ -258,8 +255,7 @@ GROUP BY p.ProductID, p.ProductName
 HAVING GrossRevenue > 200.00
 ORDER BY TotalUnitsSold DESC;
 
-
-
+ 
 
 # Identifying Customer Habits (Multiple Aggregates)
 /* 
@@ -312,12 +308,4 @@ SELECT A.FirstName AS Customer1,
 FROM Customers A
 INNER JOIN Customers B ON A.City = B.City
 WHERE A.CustomerID < B.CustomerID;
-
-
-
-
-
-
-
-
 
