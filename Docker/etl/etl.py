@@ -28,6 +28,10 @@ USGS_URL = os.getenv(
     "USGS_URL",
     "#",
 )
+DATABASE_URL = os.getenv("DATABASE_URL", "#")
+DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
+
+
 
 
 
