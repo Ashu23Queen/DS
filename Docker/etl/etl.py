@@ -51,4 +51,12 @@ def extract():
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     stamp = dt.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
+    
     return data
+
+
+
+def transform(data):
+    """Pull out just the useful fields and drop anything without a magnitude."""
+     
+    return rows
