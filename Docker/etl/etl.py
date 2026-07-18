@@ -9,6 +9,7 @@ import time
 import datetime as dt
 from pathlib import Path
 
+# Third-Party Libraries (External)
 import requests
 import psycopg2
 '''
