@@ -58,5 +58,8 @@ def extract():
 
 def transform(data):
     """Pull out just the useful fields and drop anything without a magnitude."""
-     
+    rows = []
+    for feature in data["features"]:
+      
+    print(f"[transform] kept {len(rows)} quakes that have a magnitude")
     return rows
