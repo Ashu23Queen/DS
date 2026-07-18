@@ -34,4 +34,20 @@ DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
 
 
 
+# USGS_URL = os.getenv(
+#    "USGS_URL",
+#    "#",
+# )
+# DATABASE_URL = os.getenv("DATABASE_URL", "#")
+# DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
 
+
+def extract():
+     
+    print("[extract] ...")
+    resp = requests.get(USGS_URL, timeout=30)
+    resp.raise_for_status()
+    data = resp.json()
+
+   
+    return data
