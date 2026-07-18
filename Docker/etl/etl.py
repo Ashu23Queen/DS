@@ -49,5 +49,6 @@ def extract():
     resp.raise_for_status()
     data = resp.json()
 
-   
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+ 
     return data
