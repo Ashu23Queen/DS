@@ -81,7 +81,7 @@ def get_connection(retries=10, delay=3):
 
 
 def load(rows):
-    
+    """Create the table if needed and upsert every quake into Postgres."""
     conn = get_connection()
     conn.autocommit = True
     cur = conn.cursor()
