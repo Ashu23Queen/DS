@@ -87,8 +87,17 @@ def load(rows):
     cur = conn.cursor()
 
     cur.execute("""
-        
+        CREATE TABLE IF NOT EXISTS quakes (
+            id         TEXT PRIMARY KEY,
+            place      TEXT,
+            magnitude  DOUBLE PRECISION,
+            depth_km   DOUBLE PRECISION,
+            longitude  DOUBLE PRECISION,
+            latitude   DOUBLE PRECISION,
+            event_time TIMESTAMP
+        );
     """)
 
 
 
+    
