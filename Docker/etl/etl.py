@@ -67,11 +67,8 @@ def transform(data):
     print(f"[transform] kept {len(rows)} quakes that have a magnitude")
     return rows
 
- 
 
-
-
-
-
-
+def get_connection(retries=10, delay=3):
+    
+    raise RuntimeError("Could not connect to the database after several tries")
 
