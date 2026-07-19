@@ -81,3 +81,7 @@ def get_connection(retries=10, delay=3):
 
 
 def load(rows):
+    
+    conn = get_connection()
+    conn.autocommit = True
+    cur = conn.cursor()
