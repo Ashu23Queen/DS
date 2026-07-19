@@ -85,3 +85,10 @@ def load(rows):
     conn = get_connection()
     conn.autocommit = True
     cur = conn.cursor()
+
+    cur.execute("""
+        
+    """)
+
+
+
