@@ -69,6 +69,12 @@ def transform(data):
 
 
 def get_connection(retries=10, delay=3):
-    
+    """Postgres can take a few seconds to wake up — so we retry politely."""
+    for attempt in range(1, retries + 1):
+        try:
+            return psycopg2.connect(DATABASE_URL)
+        except psycopg2.OperationalError:
+            print(f"")
+            time.sleep(delay)
     raise RuntimeError("Could not connect to the database after several tries")
 
