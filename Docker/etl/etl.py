@@ -31,35 +31,47 @@ USGS_URL = os.getenv(
 DATABASE_URL = os.getenv("DATABASE_URL", "#")
 DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
 
-
-
-
-# USGS_URL = os.getenv(
-#    "USGS_URL",
-#    "#",
-# )
-# DATABASE_URL = os.getenv("DATABASE_URL", "#")
-# DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
-
-
-def extract():
-     
-    print("[extract] ...")
+ 
+def extract(): 
+    print(" downloading earthquakes ...")
     resp = requests.get(USGS_URL, timeout=30)
     resp.raise_for_status()
-    data = resp.json()
+    data = resp.json() 
 
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     stamp = dt.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
-    
-    return data
+    raw_path = DATA_DIR / f"usgs_raw_{stamp}.json"
+    raw_path.write_text(json.dumps(data))
+    print(f"[extract] got {len(data['features'])} name  -> raw saved to {raw_path}")
 
+    return data 
 
 
 def transform(data):
-    """Pull out just the useful fields and drop anything without a magnitude."""
     rows = []
     for feature in data["features"]:
-      
+        props = feature["properties"]
+        lon, lat, depth = feature["geometry"]["coordinates"]  # GeoJSON order!
+        mag = props.get("mag")
+        if mag is None:
+            continue  # skip records with no magnitude
+        rows.append({
+            "id": feature["id"],
+            "place": props.get("place"),
+            "magnitude": mag,
+            "depth_km": depth,
+            "longitude": lon,
+            "latitude": lat,
+            "event_time": dt.datetime.utcfromtimestamp(props["time"] / 1000),
+        })
     print(f"[transform] kept {len(rows)} quakes that have a magnitude")
     return rows
+
+ 
+
+
+
+
+
+
+
