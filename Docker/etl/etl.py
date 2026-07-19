@@ -74,7 +74,7 @@ def get_connection(retries=10, delay=3):
         try:
             return psycopg2.connect(DATABASE_URL)
         except psycopg2.OperationalError:
-            print(f"")
+            print(f"[load] db not ready ({attempt}/{retries}); waiting {delay}s ...")
             time.sleep(delay)
     raise RuntimeError("Could not connect to the database after several tries")
 
