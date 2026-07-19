@@ -78,3 +78,6 @@ def get_connection(retries=10, delay=3):
             time.sleep(delay)
     raise RuntimeError("Could not connect to the database after several tries")
 
+
+
+def load(rows):
