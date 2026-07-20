@@ -99,7 +99,17 @@ def load(rows):
     """)
 
     for r in rows:
-            cur.execute()
+            cur.execute("""
+                INSERT INTO quakes (id, place, magnitude, depth_km, longitude, latitude, event_time)
+                VALUES (%(id)s, %(place)s, %(magnitude)s, %(depth_km)s,
+                        %(longitude)s, %(latitude)s, %(event_time)s)
+                ON CONFLICT (id) DO UPDATE SET
+                    magnitude = EXCLUDED.magnitude,
+                    place     = EXCLUDED.place;
+            """, r)
+
+
+            
 
 
     
