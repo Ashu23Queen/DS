@@ -45,7 +45,7 @@ def extract():
     print(f"[extract] got {len(data['features'])} name  -> raw saved to {raw_path}")
 
     return data 
-
+  
 
 def transform(data):
     rows = []
@@ -97,6 +97,9 @@ def load(rows):
             event_time TIMESTAMP
         );
     """)
+
+    for r in rows:
+            cur.execute()
 
 
     
