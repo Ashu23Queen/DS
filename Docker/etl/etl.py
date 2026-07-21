@@ -22,7 +22,7 @@ sending data, or fetching information from external APIs.
 import psycopg2: The most popular PostgreSQL database adapter for Python. 
 It allows your script to connect to a PostgreSQL database, run SQL queries, insert data, and manage transactions.
 ''' 
- 
+
 
 
 # --- Config (all read from environment variables so the container is flexible) ---
