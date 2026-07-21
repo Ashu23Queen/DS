@@ -1,5 +1,3 @@
-
-
 import os
 import datetime as dt
 
@@ -11,7 +9,7 @@ from fastapi import FastAPI
 DATABASE_URL = os.getenv("DATABASE_URL")  # present => DB mode; absent => live mode
 USGS_URL = os.getenv(
     "USGS_URL",
-    "#",   # your live data link
+    "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 )
 
 app = FastAPI(title="Quake Tracker API 🌍")

@@ -28,9 +28,9 @@ It allows your script to connect to a PostgreSQL database, run SQL queries, inse
 # --- Config (all read from environment variables so the container is flexible) ---
 USGS_URL = os.getenv(
     "USGS_URL",
-    "#",
+    "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 )
-DATABASE_URL = os.getenv("DATABASE_URL", "#")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://quake:quake@db:5432/quakes")
 DATA_DIR = Path(os.getenv("DATA_DIR", "/data"))
 
 
