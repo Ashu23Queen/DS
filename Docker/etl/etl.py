@@ -22,32 +22,37 @@ sending data, or fetching information from external APIs.
 import psycopg2: The most popular PostgreSQL database adapter for Python. 
 It allows your script to connect to a PostgreSQL database, run SQL queries, insert data, and manage transactions.
 ''' 
+ 
+
 
 # --- Config (all read from environment variables so the container is flexible) ---
 USGS_URL = os.getenv(
     "USGS_URL",
-    "#",
+    "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 )
-DATABASE_URL = os.getenv("DATABASE_URL", "#")
-DATA_DIR = Path(os.getenv("DATA_DIR", "#"))
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://quake:quake@db:5432/quakes")
+DATA_DIR = Path(os.getenv("DATA_DIR", "/data"))
 
- 
-def extract(): 
-    print(" downloading earthquakes ...")
+
+def extract():
+    """Download the last 24h of earthquakes from USGS (no API key needed!)."""
+    print("[extract] downloading earthquakes from USGS ...")
     resp = requests.get(USGS_URL, timeout=30)
     resp.raise_for_status()
-    data = resp.json() 
+    data = resp.json()
 
+    # Save the raw feed into our mounted /data folder so we can inspect it later.
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     stamp = dt.datetime.utcnow().strftime("%Y%m%dT%H%M%SZ")
     raw_path = DATA_DIR / f"usgs_raw_{stamp}.json"
     raw_path.write_text(json.dumps(data))
-    print(f"[extract] got {len(data['features'])} name  -> raw saved to {raw_path}")
 
-    return data 
-  
+    print(f"[extract] got {len(data['features'])} quakes -> raw saved to {raw_path}")
+    return data
+
 
 def transform(data):
+    """Pull out just the useful fields and drop anything without a magnitude."""
     rows = []
     for feature in data["features"]:
         props = feature["properties"]
@@ -79,7 +84,6 @@ def get_connection(retries=10, delay=3):
     raise RuntimeError("Could not connect to the database after several tries")
 
 
-
 def load(rows):
     """Create the table if needed and upsert every quake into Postgres."""
     conn = get_connection()
@@ -99,21 +103,28 @@ def load(rows):
     """)
 
     for r in rows:
-            cur.execute("""
-                INSERT INTO quakes (id, place, magnitude, depth_km, longitude, latitude, event_time)
-                VALUES (%(id)s, %(place)s, %(magnitude)s, %(depth_km)s,
-                        %(longitude)s, %(latitude)s, %(event_time)s)
-                ON CONFLICT (id) DO UPDATE SET
-                    magnitude = EXCLUDED.magnitude,
-                    place     = EXCLUDED.place;
-            """, r)
+        cur.execute("""
+            INSERT INTO quakes (id, place, magnitude, depth_km, longitude, latitude, event_time)
+            VALUES (%(id)s, %(place)s, %(magnitude)s, %(depth_km)s,
+                    %(longitude)s, %(latitude)s, %(event_time)s)
+            ON CONFLICT (id) DO UPDATE SET
+                magnitude = EXCLUDED.magnitude,
+                place     = EXCLUDED.place;
+        """, r)
+
+    cur.execute("SELECT COUNT(*) FROM quakes;")
+    total = cur.fetchone()[0]
+    print(f"[load] database now holds {total} quakes")
+    cur.close()
+    conn.close()
 
 
-            
+def main():
+    data = extract()
+    rows = transform(data)
+    load(rows)
+    print("[done] ETL finished ✅")
 
 
-    
-
-
-
-    
+if __name__ == "__main__":
+    main()

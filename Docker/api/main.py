@@ -11,7 +11,7 @@ from fastapi import FastAPI
 DATABASE_URL = os.getenv("DATABASE_URL")  # present => DB mode; absent => live mode
 USGS_URL = os.getenv(
     "USGS_URL",
-    "#",   # your own live data link
+    "#",   # your live data link
 )
 
 app = FastAPI(title="Quake Tracker API 🌍")
