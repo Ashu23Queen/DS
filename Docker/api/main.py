@@ -11,9 +11,10 @@ USGS_URL = os.getenv(
     "USGS_URL",
     "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson",
 )
+# United States Geological Survey
 
 app = FastAPI(title="Quake Tracker API 🌍")
-
+ 
 
 def from_database(limit):
     conn = psycopg2.connect(DATABASE_URL)
@@ -27,6 +28,7 @@ def from_database(limit):
     cur.close()
     conn.close()
     return rows
+
 
 
 def from_live(limit):
