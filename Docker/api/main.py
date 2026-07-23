@@ -1,6 +1,6 @@
 import os
 import datetime as dt
-import pandas as pd
+import pandas as pd     # required for from_database function
 
 import requests
 import psycopg2
@@ -34,7 +34,7 @@ def from_database(limit):
 '''
 
 
-def from_database(limit):
+def from_database(limit):  
     query = """
         SELECT id, place, magnitude, depth_km, longitude, latitude, event_time 
         FROM quakes 
