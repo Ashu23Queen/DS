@@ -50,11 +50,7 @@ def from_live(limit):
         })
     rows.sort(key=lambda r: r["magnitude"], reverse=True)
     return rows[:limit]
-
-
-def get_quakes(limit):
-    return from_database(limit) if DATABASE_URL else from_live(limit)
-
+ 
 
 @app.get("/")
 def home():
