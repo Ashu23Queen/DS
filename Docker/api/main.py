@@ -1,5 +1,6 @@
 import os
 import datetime as dt
+import pandas as pd
 
 import requests
 import psycopg2
@@ -17,18 +18,14 @@ app = FastAPI(title="Quake Tracker API 🌍")
  
 
 def from_database(limit):
-    conn = psycopg2.connect(DATABASE_URL)
-    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-    cur.execute(
-        "SELECT id, place, magnitude, depth_km, longitude, latitude, event_time "
-        "FROM quakes ORDER BY magnitude DESC LIMIT %s;",
-        (limit,),
-    )
-    rows = [dict(r) for r in cur.fetchall()]
-    cur.close()
-    conn.close()
-    return rows
-
+    query = """
+        SELECT id, place, magnitude, depth_km, longitude, latitude, event_time 
+        FROM quakes 
+        ORDER BY magnitude DESC 
+        LIMIT %s;
+    """
+    df = pd.read_sql_query(query, DATABASE_URL, params=(limit,))
+    return df.to_dict(orient="records")
 
 
 def from_live(limit):
