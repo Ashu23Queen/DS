@@ -49,7 +49,21 @@ def from_database(limit):
 def from_live(limit):
     data = requests.get(USGS_URL, timeout=30).json()
 
-   
+    rows = [
+        {
+            "id": f["id"],
+            "place": f["properties"].get("place"),
+            "magnitude": f["properties"]["mag"],
+            "depth_km": f["geometry"]["coordinates"][2],
+            "longitude": f["geometry"]["coordinates"][0],
+            "latitude": f["geometry"]["coordinates"][1],
+            "event_time": dt.datetime.fromtimestamp(
+                f["properties"]["time"] / 1000, tz=dt.timezone.utc
+            ).isoformat(),
+        }
+       
+    ]
+
     return sorted(rows, key=lambda r: r["magnitude"], reverse=True)[:limit]
 
 
