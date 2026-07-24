@@ -61,7 +61,8 @@ def from_live(limit):
                 f["properties"]["time"] / 1000, tz=dt.timezone.utc
             ).isoformat(),
         }
-       
+        for f in data.get("features", [])
+        if f["properties"].get("mag") is not None
     ]
 
     return sorted(rows, key=lambda r: r["magnitude"], reverse=True)[:limit]
