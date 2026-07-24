@@ -15,7 +15,7 @@ USGS_URL = os.getenv(
 # United States Geological Survey
 
 app = FastAPI(title="Quake Tracker API 🌍")
-
+ 
 
 
 '''
@@ -46,27 +46,14 @@ def from_database(limit):
 
 
 
-
 def from_live(limit):
     data = requests.get(USGS_URL, timeout=30).json()
-    rows = []
-    for f in data["features"]:
-        p = f["properties"]
-        lon, lat, depth = f["geometry"]["coordinates"]
-        if p.get("mag") is None:
-            continue
-        rows.append({
-            "id": f["id"],
-            "place": p.get("place"),
-            "magnitude": p["mag"],
-            "depth_km": depth,
-            "longitude": lon,
-            "latitude": lat,
-            "event_time": dt.datetime.utcfromtimestamp(p["time"] / 1000).isoformat(),
-        })
-    rows.sort(key=lambda r: r["magnitude"], reverse=True)
-    return rows[:limit]
- 
+
+   
+    return sorted(rows, key=lambda r: r["magnitude"], reverse=True)[:limit]
+
+
+
 
 @app.get("/")
 def home():
