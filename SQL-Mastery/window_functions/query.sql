@@ -2,7 +2,7 @@ create database company_db;
 
 use company_db
 
-# What are SQL ranking functions, and what is their basic syntax
+# SQL ranking functions
 CREATE TABLE Employees (
     EmployeeID INT PRIMARY KEY,
     FirstName VARCHAR(50) NOT NULL,
@@ -17,4 +17,7 @@ INSERT INTO Employees (EmployeeID, FirstName, LastName, Department, Salary) VALU
 (2, 'Bob', 'Jones', 'Marketing', 62000.00),
 (3, 'Charlie', 'Brown', 'Engineering', 91000.00),
 (4, 'Diana', 'Prince', 'HR', 55000.00);
+
+
+
 
