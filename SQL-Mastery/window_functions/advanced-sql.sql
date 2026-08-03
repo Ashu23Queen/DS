@@ -18,3 +18,4 @@ WITH payments AS (
 SELECT COUNT(merchant_id) AS payment_count
 FROM payments 
 WHERE minute_difference <= 10;
+
