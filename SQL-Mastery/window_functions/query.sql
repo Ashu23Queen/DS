@@ -85,4 +85,27 @@ SELECT
 FROM Employees;
 
 
+# Statistical Distribution: PERCENT_RANK() and CUME_DIST()
+/* PERCENT_RANK(): Calculates the relative rank of a row ($(\text{rank} - 1) / (\text{total rows} - 1)$).
+CUME_DIST(): Calculates the cumulative distribution, representing the proportion of values less than or equal to the 
+current value.
+*/
+SELECT 
+    EmployeeID,
+    FirstName,
+    Salary,
+    PERCENT_RANK() OVER (ORDER BY Salary) AS SalaryPercentRank,
+    CUME_DIST() OVER (ORDER BY Salary) AS SalaryCumeDist
+FROM Employees;
+
+# NTILE() for Bucket Distribution
+SELECT 
+    EmployeeID,
+    FirstName,
+    Department,
+    Salary,
+    NTILE(2) OVER (ORDER BY Salary DESC) AS SalaryTier
+FROM Employees;
+
+
 
