@@ -18,6 +18,10 @@ INSERT INTO Employees (EmployeeID, FirstName, LastName, Department, Salary) VALU
 (3, 'Charlie', 'Brown', 'Engineering', 91000.00),
 (4, 'Diana', 'Prince', 'HR', 55000.00);
 
+# 1. ROW_NUMBER()
 
-
+SELECT 
+    EmployeeID, FirstName, LastName, Department, Salary,
+    ROW_NUMBER() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRank
+FROM Employees;
 
