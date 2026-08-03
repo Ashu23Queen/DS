@@ -66,3 +66,23 @@ SELECT
     ) AS MovingAvgSalary
 FROM Employees;
 
+# FIRST_VALUE() and LAST_VALUE()
+
+SELECT 
+    EmployeeID,
+    FirstName,
+    Department,
+    Salary,
+    FIRST_VALUE(Salary) OVER (
+        PARTITION BY Department 
+        ORDER BY Salary DESC
+    ) AS HighestDeptSalary,
+    LAST_VALUE(Salary) OVER (
+        PARTITION BY Department 
+        ORDER BY Salary DESC 
+        ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING
+    ) AS LowestDeptSalary
+FROM Employees;
+
+
+
