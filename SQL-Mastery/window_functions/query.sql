@@ -52,4 +52,17 @@ SELECT
     LEAD(Salary, 1, 0) OVER (ORDER BY Salary) AS HigherSalary
 FROM Employees;
 
+# Custom Frame Specifications ROWS BETWEEN
+SELECT 
+    EmployeeID,
+    FirstName,
+    Department,
+    Salary,
+    -- Moving average of the current row and the preceding row
+    AVG(Salary) OVER (
+        PARTITION BY Department 
+        ORDER BY Salary 
+        ROWS BETWEEN 1 PRECEDING AND CURRENT ROW
+    ) AS MovingAvgSalary
+FROM Employees;
 
