@@ -44,8 +44,12 @@ SELECT
     SUM(Salary) OVER (ORDER BY Salary) AS RunningTotalSalary
 FROM Employees;
 
+# 4. LAG() and LEAD()
 
-
-
+SELECT 
+    EmployeeID, FirstName, LastName, Salary,
+    LAG(Salary, 1, 0) OVER (ORDER BY Salary) AS LowerSalary,
+    LEAD(Salary, 1, 0) OVER (ORDER BY Salary) AS HigherSalary
+FROM Employees;
 
 
