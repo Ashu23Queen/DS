@@ -46,10 +46,49 @@ SELECT
     ORDER BY searches)::DECIMAL, 1) AS  median
 FROM searches_expanded;
 
+# Monthly Merchant Balance
+/*
+Write a query to print the cumulative balance of the merchant account at the end of each day, 
+with the total balance reset back to zero at the end of the month. Output the transaction date and cumulative balance.
+*/
+SELECT 
+    DATE_TRUNC('day', transaction_date) AS transaction_day,
+    SUM(SUM(CASE WHEN type = 'deposit' THEN amount ELSE -amount END)) OVER (
+        PARTITION BY DATE_TRUNC('month', transaction_date) 
+        ORDER BY DATE_TRUNC('day', transaction_date)
+    ) AS balance
+FROM transactions
+GROUP BY DATE_TRUNC('day', transaction_date), DATE_TRUNC('month', transaction_date)
+ORDER BY transaction_day;
+ 
+
+# Server Utilization Time
+# Write a query that calculates the total time that the fleet of servers was running. The output should be in units of full days.
+
+
+WITH running_time 
+AS (
+  SELECT
+    server_id,
+    session_status,
+    status_time AS start_time,
+    LEAD(status_time) OVER (
+      PARTITION BY server_id
+      ORDER BY status_time) AS stop_time
+  FROM server_utilization
+)
+
+SELECT 
+# DATE_PART('days', ...): Extracts just the total number of full days from the final accumulated time interval.
+  DATE_PART('days', JUSTIFY_HOURS(SUM(stop_time - start_time))) AS total_uptime_days   
+# JUSTIFY_HOURS(...): Adjusts the total interval so that accumulated hours roll up cleanly into days (e.g., turning 48 hours into 2 days).
+FROM running_time
+WHERE session_status = 'start'
+  AND stop_time IS NOT NULL;
 
 
 
-
-
-
-
+ 
+ 
+ 
+ 
